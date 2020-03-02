@@ -9,6 +9,52 @@
 
 
   <div class="keys">
+
+     <!-- Top Row Letters-->
+     <div data-key="81" class="key">
+      <kbd>Q</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="87" class="key">
+      <kbd>W</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="69" class="key">
+      <kbd>E</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="82" class="key">
+      <kbd>R</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="84" class="key">
+      <kbd>T</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="88" class="key">
+      <kbd>Y</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="85" class="key">
+      <kbd>U</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="73" class="key">
+      <kbd>I</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="79" class="key">
+      <kbd>O</kbd>
+      <span class="sound">tink</span>
+    </div>
+    <div data-key="80" class="key">
+      <kbd>P</kbd>
+      <span class="sound">tink</span>
+    </div>
+
+    
+
+     <!-- Mid Row Letters-->
     <div data-key="65" class="key">
       <kbd>A</kbd>
       <span class="sound">clap</span>
@@ -45,6 +91,75 @@
       <kbd>L</kbd>
       <span class="sound">tink</span>
     </div>
+
+    <!-- Bottom Row Letters-->
+    <div data-key="89" class="key">
+      <kbd>Z</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="87" class="key">
+      <kbd>X</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="67" class="key">
+      <kbd>C</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="86" class="key">
+      <kbd>V</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="66" class="key">
+      <kbd>B</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="78" class="key">
+      <kbd>N</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="77" class="key">
+      <kbd>M</kbd>
+      <span class="sound">snare</span>
+    </div>
+
+    <!-- NUMBERS -->
+    <div data-key="97" class="key">
+      <kbd>1</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="98" class="key">
+      <kbd>2</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="99" class="key">
+      <kbd>3</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="100" class="key">
+      <kbd>4</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="101" class="key">
+      <kbd>5</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="102" class="key">
+      <kbd>6</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="103" class="key">
+      <kbd>7</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="104" class="key">
+      <kbd>8</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="105" class="key">
+      <kbd>9</kbd>
+      <span class="sound">tink</span>
+    </div>
+
   </div>
 
   <audio data-key="65" src="sounds/clap.wav"></audio>
@@ -58,25 +173,25 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-window.addEventListener('keydown', function(e) {
-  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`
-    );
-  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`
-    );
-  if (!audio)  return;
-  console.log(audio)
-  audio.currentTime = 0; // rewinds to start
-  audio.play();
-  key.classList.add('playing'); 
-    }
-  );
-function removeTransition(e) {
-  if(e.propertyName !== 'transform') return; // skip it if its not a transform
-  console.log(e.propertyName)
-}
-const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('transitionEnd', removeTransition));
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
 
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+    console.log(e)
+  }
+
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
 </script>
 
 
